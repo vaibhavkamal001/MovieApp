@@ -27,7 +27,7 @@ function Silder(props) {
   }, [currentIndex, nextSlide]);
 
   return (
-    <div className="max-w-[100%] h-[250px] md:h-[400px] lg:h-[500px] w-full m-auto group relative top-[78px]">
+    <div className="max-w-[100%] h-[250px] md:h-[450px] lg:h-[500px] w-full m-auto group relative top-[78px]">
       <Link to={`movie/${slides[currentIndex]?.id}`}>
         <div
           style={{

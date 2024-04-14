@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import ApplicationConstant from "../../applicationConstant/ApplicationConstant";
 import { FaStar } from "react-icons/fa";
 import SimilarMovies from "./SimilarMovies";
-import NavBar from "../NavBar/NavBar";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { MovieDetail } from "../../store/movie-action";
+import { AddWatchList } from "../../store/watchlist-action";
 
 export default function MovieDetails() {
   const { id } = useParams();
@@ -15,7 +15,9 @@ export default function MovieDetails() {
   }, [id, dispatch]);
 
   const details = useSelector((state) => state.Movies.MovieDetails);
-
+  const handleAddWatchListBtn = () => {
+    dispatch(AddWatchList(details));
+  };
   const hh = Math.floor(details.runtime / 60);
   const mm = details.runtime % 60;
   const genres = details?.genres?.map((ele) => ele.name).join(" ");
@@ -81,10 +83,10 @@ export default function MovieDetails() {
               </div>
             </div>
             <button
-              type="button"
+              onClick={handleAddWatchListBtn}
               className="md:mx-12 p-2 text-red-500 rounded hover:text-white"
             >
-              Watch Later
+              Add To Watch List
             </button>
           </div>
         </div>

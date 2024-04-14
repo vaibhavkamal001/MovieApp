@@ -1,14 +1,22 @@
 import React from "react";
 import { BsSearch } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthAction } from "../../store/auth-slice";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const isLogin = useSelector((state) => state.Auth.isLogin);
+  const isLogin = localStorage.getItem("user");
+  const dispatch = useDispatch();
 
   const onClickSearch = () => {
     navigate("../search");
+  };
+
+  const handleLogOut = () => {
+    dispatch(AuthAction.isAuthenticateUser(false));
+    localStorage.removeItem("user");
+    navigate("..");
   };
 
   return (
@@ -27,17 +35,21 @@ export default function NavBar() {
         >
           <BsSearch />
         </button>
-        {isLogin && (
-          <button className="text-slate-400 hover:text-white font-semibold p-2">
-            Watch List
-          </button>
+        {isLogin ? (
+          <span
+            onClick={handleLogOut}
+            className="text-slate-400 hover:text-white font-semibold p-2 cursor-pointer"
+          >
+            LogOut
+          </span>
+        ) : (
+          <Link
+            to="../login"
+            className="text-slate-400 hover:text-white font-semibold p-2"
+          >
+            LogIn
+          </Link>
         )}
-        <Link
-          to="../login"
-          className="text-slate-400 hover:text-white font-semibold p-2"
-        >
-          {isLogin ? "LogOut" : "LogIn"}
-        </Link>
       </div>
     </div>
   );

@@ -6,7 +6,11 @@ const AuthSlice = createSlice({
     isLogin: false,
     AuthorizationToken: "",
   },
-  reducers: {},
+  reducers: {
+    isAuthenticateUser(state, action) {
+      state.isLogin = action.payload;
+    },
+  },
 });
 
 export const AuthAction = AuthSlice.actions;
