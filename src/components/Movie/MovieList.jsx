@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMovies } from "../../store/movie-action";
-import MovieSlice, { movieAction } from "../../store/movie-slice.";
+import { movieAction } from "../../store/movie-slice.";
 
 export default function MovieList() {
   const [page, setPage] = useState(1);

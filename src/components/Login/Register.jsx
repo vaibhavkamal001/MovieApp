@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "./Input";
 import { RegisterUser } from "../../store/auth-action";
-import ApplicationConstant from "../../applicationConstant/ApplicationConstant";
 
 export default function Register() {
   const emailRef = useRef("");
@@ -12,7 +11,6 @@ export default function Register() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLogIn = useSelector((state) => state.Auth.isLogIn);
 
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
@@ -23,7 +21,7 @@ export default function Register() {
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
 
-    if (email === "" || !ApplicationConstant.emailRxg.test(email)) {
+    if (email === "" || !validateEmailAddress(email)) {
       emailRef.current.focus();
       setIsValidEmail(false);
       return;
@@ -124,4 +122,24 @@ export default function Register() {
       </div>
     </div>
   );
+}
+
+function validateEmailAddress(emailAddress) {
+  let atSymbol = emailAddress.indexOf("@");
+  let dotSymbol = emailAddress.lastIndexOf(".");
+  let spaceSymbol = emailAddress.indexOf(" ");
+
+  if (
+    atSymbol !== -1 &&
+    atSymbol !== 0 &&
+    dotSymbol !== -1 &&
+    dotSymbol !== 0 &&
+    dotSymbol > atSymbol + 1 &&
+    emailAddress.length > dotSymbol + 1 &&
+    spaceSymbol === -1
+  ) {
+    return true;
+  } else {
+    return false;
+  }
 }
